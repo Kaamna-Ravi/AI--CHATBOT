@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Chatbot</title>
+
+    <!-- ================= CSS ================= -->
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            width: 420px;
+            max-width: 92%;
+
+            background: white;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Header */
+
+        .chat-header {
+            background: #4f46e5;
+
+            color: white;
+
+            padding: 20px;
+
+            text-align: center;
+        }
+
+        .chat-header h2 {
+            margin-bottom: 5px;
+        }
+
+        .chat-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Chat area */
+
+        .chat-box {
+            height: 400px;
+
+            padding: 20px;
+
+            background: #f5f7fb;
+
+            overflow-y: auto;
+        }
+
+        /* Messages */
+
+        .message {
+            max-width: 75%;
+
+            padding: 12px 15px;
+
+            margin-bottom: 12px;
+
+            border-radius: 15px;
+
+            line-height: 1.4;
+
+            word-wrap: break-word;
+        }
+
+        .bot-message {
+            background: #e0e7ff;
+
+            color: #1e1b4b;
+
+            margin-right: auto;
+
+            border-bottom-left-radius: 3px;
+        }
+
+        .user-message {
+            background: #4f46e5;
+
+            color: white;
+
+            margin-left: auto;
+
+            border-bottom-right-radius: 3px;
+        }
+
+        /* Input section */
+
+        .input-area {
+            display: flex;
+
+            gap: 10px;
+
+            padding: 15px;
+
+            background: white;
+
+            border-top: 1px solid #ddd;
+        }
+
+        .input-area input {
+            flex: 1;
+
+            padding: 12px 15px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        .input-area input:focus {
+            border-color: #4f46e5;
+        }
+
+        .input-area button {
+            padding: 12px 20px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #4f46e5;
+
+            color: white;
+
+            font-size: 14px;
+
+            cursor: pointer;
+        }
+
+        .input-area button:hover {
+            background: #3730a3;
+        }
+
+        /* Mobile responsive */
+
+        @media (max-width: 500px) {
+
+            .chat-container {
+                width: 95%;
+            }
+
+            .chat-box {
+                height: 450px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- ================= CHATBOT UI ================= -->
+
+    <div class="chat-container">
+
+        <div class="chat-header">
+
+            <h2>🤖 AI Chatbot</h2>
+
+            <p>Your Smart Virtual Assistant</p>
+
+        </div>
+
+
+        <div class="chat-box" id="chatBox">
+
+            <div class="message bot-message">
+
+                Hello! 👋 <br>
+                I'm your AI Chatbot. How can I help you?
+
+            </div>
+
+        </div>
+
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Type your message..."
+            >
+
+            <button onclick="sendMessage()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        function sendMessage() {
+
+            let input =
+                document.getElementById("userInput");
+
+            let message =
+                input.value.trim();
+
+
+            // Empty message check
+
+            if (message === "") {
+
+                return;
+
+            }
+
+
+            // Display user message
+
+            addMessage(message, "user");
+
+
+            // Clear input box
+
+            input.value = "";
+
+
+            // Bot response
+
+            setTimeout(function () {
+
+                let reply =
+                    getBotReply(message);
+
+                addMessage(reply, "bot");
+
+            }, 500);
+
+        }
+
+
+        // Add message to chat box
+
+        function addMessage(message, type) {
+
+            let chatBox =
+                document.getElementById("chatBox");
+
+
+            let messageDiv =
+                document.createElement("div");
+
+
+            messageDiv.classList.add("message");
+
+
+            if (type === "user") {
+
+                messageDiv.classList.add("user-message");
+
+            }
+
+            else {
+
+                messageDiv.classList.add("bot-message");
+
+            }
+
+
+            messageDiv.textContent = message;
+
+
+            chatBox.appendChild(messageDiv);
+
+
+            // Automatically scroll down
+
+            chatBox.scrollTop =
+                chatBox.scrollHeight;
+
+        }
+
+
+        // Generate chatbot response
+
+        function getBotReply(message) {
+
+            message =
+                message.toLowerCase();
+
+
+            if (
+                message.includes("hello") ||
+                message.includes("hi") ||
+                message.includes("hey")
+            ) {
+
+                return "Hello! 😊 How can I help you?";
+
+            }
+
+
+            else if (
+                message.includes("name")
+            ) {
+
+                return "I'm your AI Chatbot 🤖.";
+
+            }
+
+
+            else if (
+                message.includes("college")
+            ) {
+
+                return "I can help you with basic college-related information.";
+
+            }
+
+
+            else if (
+                message.includes("course")
+            ) {
+
+                return "You can ask me about courses and subjects.";
+
+            }
+
+
+            else if (
+                message.includes("attendance")
+            ) {
+
+                return "You can ask me questions related to student attendance.";
+
+            }
+
+
+            else if (
+                message.includes("help")
+            ) {
+
+                return "Sure! You can ask me about college, courses, attendance, or my name.";
+
+            }
+
+
+            else if (
+                message.includes("bye")
+            ) {
+
+                return "Goodbye! 👋 Have a nice day!";
+
+            }
+
+
+            else {
+
+                return "Sorry, I don't understand that yet. Please try another question.";
+
+            }
+
+        }
+
+
+        // Press Enter to send message
+
+        document
+            .getElementById("userInput")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+
+                    sendMessage();
+
+                }
+
+            });
+
+    </script>
+
+</body>
+
+</html>
